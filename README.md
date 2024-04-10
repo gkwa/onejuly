@@ -11,7 +11,7 @@ If our Taskfile.yml is correct then our dependencies are built for us without ha
 This is super.
 
 
-## ~~FIXME~~
+## ~~FIXME~~ Parents should reep their children when they change
 
 If we have this set of 4 images:
 
