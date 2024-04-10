@@ -1,0 +1,113 @@
+version: "3"
+vars:
+  GREETING: Hello, World!
+tasks:
+  default:
+    cmds:
+    - task: t2-t1-ringgem
+
+  t2-t1-ringgem:
+    cmds:
+    - bash -ex t2.sh
+    - touch task-t2-t1-ringgem.txt
+    generates:
+    - task-t2-t1-ringgem.txt
+    sources:
+    - task-t1-ringgem.txt
+    method: timestamp
+    status:
+    - incus image info t2-t1-ringgem &>/dev/null
+    deps:
+    - t1-ringgem
+    - t2.sh
+
+  clean-t1-ringgem:
+    cmds:
+    - incus image info t1-ringgem &>/dev/null && incus image rm t1-ringgem
+    - incus image info t2-t1-ringgem &>/dev/null && incus image rm t2-t1-ringgem
+
+  t1-ringgem:
+    cmds:
+    - bash -ex t1.sh
+    - touch task-t1-ringgem.txt
+    generates:
+    - task-t1-ringgem.txt
+    sources:
+    - task-ringgem-ubuntu.txt
+    method: timestamp
+    status:
+    - incus image info t1-ringgem &>/dev/null
+    deps:
+    - ringgem-ubuntu
+    - t1.sh
+
+  ringgem-ubuntu:
+    cmds:
+    - bash -ex ringgem.sh
+    - touch task-ringgem-ubuntu.txt
+    generates:
+    - task-ringgem-ubuntu.txt
+    method: timestamp
+    status:
+    - incus image info ringgem-ubuntu &>/dev/null
+    deps:
+    - ringgem.sh
+    - boilerplate
+    - incus
+
+
+  scripts:
+    deps:
+    - t1.sh
+    - t2.sh
+    - ringgem.sh
+    - boilerplate
+
+  t2.sh:
+    cmds:
+    - |
+      boilerplate --template-url=https://github.com/taylormonacelli/onejuly/archive/refs/heads/master.zip//onejuly-master/templates --output-folder=. --var ContainerName=t2 --var BaseImage=t1-ringgem --var OutputImageAlias=t2-t1-ringgem
+    status:
+    - test -s t2.sh
+    deps:
+    - boilerplate
+
+  t1.sh:
+    cmds:
+    - |
+      boilerplate --template-url=https://github.com/taylormonacelli/onejuly/archive/refs/heads/master.zip//onejuly-master/templates --output-folder=. --var ContainerName=t1 --var BaseImage=ringgem-ubuntu --var OutputImageAlias=t1-ringgem
+    status:
+    - test -s t1.sh
+    deps:
+    - boilerplate
+
+  ringgem.sh:
+    cmds:
+    - |
+      boilerplate --template-url=https://github.com/taylormonacelli/onejuly/archive/refs/heads/master.zip//onejuly-master/templates --output-folder=. --var ContainerName=ringgem --var BaseImage=images:ubuntu/22.04/cloud --var OutputImageAlias=ringgem-ubuntu
+    status:
+    - test -s ringgem.sh
+    deps:
+    - boilerplate
+
+  boilerplate:
+    cmds:
+    - echo install boilerplate manually please
+    status:
+    - command -v boilerplate >/dev/null
+
+  incus:
+    cmds:
+    - echo install incus manually please
+    status:
+    - command -v incus >/dev/null
+
+
+  build:
+    cmds:
+      - go build .
+    sources:
+      - ./*.go
+    generates:
+      - app{{exeExt}}
+    method: timestamp

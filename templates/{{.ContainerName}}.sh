@@ -56,7 +56,9 @@ incus exec {{.ContainerName}} -- shutdown now
 
 # create {{.ContainerName}} image
 cmd="incus publish {{.ContainerName}} --alias {{.OutputImageAlias}} --reuse"
-if ! timeout 10m bash -c "until $cmd; do sleep 3s; done"; then
+sleep 3s # workaround Error: The instance is currently running. Use --force to have it stopped and restarted
+
+if ! timeout 10m bash -c "until $cmd; do sleep 0.25s; done"; then
   echo ERROR: timeout exceeded for command: $cmd
   exit 1
 fi
