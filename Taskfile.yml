@@ -55,7 +55,6 @@ tasks:
     - boilerplate
     - incus
 
-
   scripts:
     deps:
     - t1.sh
@@ -101,7 +100,6 @@ tasks:
     - echo install incus manually please
     status:
     - command -v incus >/dev/null
-
 
   build:
     cmds:
