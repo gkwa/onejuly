@@ -87,3 +87,14 @@ time { bash -ex ringgem.sh && bash -ex t1.sh && bash -ex t2.sh && echo done; }
 - try out the declarative [terraform-provider-incus](https://github.com/lxc/terraform-provider-incus/tree/main?tab=readme-ov-file#terraform-provider-incus), I expect its much better than this imperative nonsense
 
 - Not sure if using boilerplate is as good as jinja [template inheritance](https://jinja.palletsprojects.com/en/3.1.x/templates/#template-inheritance).  I think you get inheritance from boilerplate [partials](https://github.com/gruntwork-io/boilerplate?tab=readme-ov-file#partials), but that seems like jinja [macros](https://jinja.palletsprojects.com/en/3.1.x/templates/#macros) which are not nearly as powerful as jinja template inheritance.  I've not yet used partials.
+
+
+
+
+
+## I'm tempted to head down the systemd-in-podman containers rabbithole
+
+
+All this graph dependency tracking is automatic in docker layers but I need systemd.
+
+Now I learn that podman quadlet is the thing that makes using systemd in containers work.  Ooff, more rabbit holes...
