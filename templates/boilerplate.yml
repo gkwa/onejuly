@@ -1,0 +1,28 @@
+variables:
+  - name: ContainerName
+    description: Enter the name of the container to create
+    type: string
+    default: container
+
+  - name: BaseImage
+    description: Enter the Linux image to use (e.g. ubuntu/22.04/cloud)
+    type: string
+    default: images:ubuntu/22.04/cloud
+
+  - name: OutputImageAlias
+    description: "When snappoting the image, give it this name (e.g. {{.ContainerName}})"
+    type: string
+    default: "{{.ContainerName}}"
+
+  - name: PackageList
+    description: Enter the list of packages to install
+    type: list
+    default:
+      - unzip
+      - curl
+
+after:
+  - command: chmod
+    args:
+    - '+x'
+    dir: "{{outputFolder}}/{{.ContainerName}}.sh"
