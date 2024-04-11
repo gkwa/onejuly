@@ -8,6 +8,8 @@ git clone https://github.com/taylormonacelli/onejuly.git
 cd onejuly
 task --dry
 task
+incus ls
+incus image ls
 ```
 
 If our Taskfile.yml is correct then our dependencies are built for us without having to fiddle.
