@@ -1,8 +1,12 @@
 # Using [go-task](https://taskfile.dev/) makes this less miserable
 
+
+
 This is all we need:
 ```bash
+git clone https://github.com/taylormonacelli/onejuly.git
 cd onejuly
+task --dry
 task
 ```
 
