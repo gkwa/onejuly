@@ -16,29 +16,29 @@ packages:
 write_files:
 
 - content: |
-   #!/usr/bin/env bash
+    #!/usr/bin/env bash
 
-   set -e
-   set -u
+    set -e
+    set -u
 
-   curl -Lo ringgem.zip https://github.com/taylormonacelli/ringgem/archive/refs/heads/master.zip
-   unzip -o ringgem.zip -d ringgem # result example: ./ringgem/ringgem-master/install-sops-on-linux.sh
+    curl -Lo ringgem.zip https://github.com/taylormonacelli/ringgem/archive/refs/heads/master.zip
+    unzip -o ringgem.zip -d ringgem # result example: ./ringgem/ringgem-master/install-sops-on-linux.sh
 
   path: /root/install_ringgem.sh
   append: true
   permissions: "0755"
 
 - content: |
-   #!/usr/bin/env bash
+    #!/usr/bin/env bash
 
-   set -e
-   set -u
+    set -e
+    set -u
 
-   if ! command task --version &>/dev/null; then
-       cd /usr/local
-       sh -c "$(curl --location https://taskfile.dev/install.sh)" -- -d
-       /usr/local/bin/task --version
-   fi
+    if ! command task --version &>/dev/null; then
+        cd /usr/local
+        sh -c "$(curl --location https://taskfile.dev/install.sh)" -- -d
+        /usr/local/bin/task --version
+    fi
 
   path: /root/install_task.sh
   append: true
@@ -53,6 +53,7 @@ incus ls --format=json | jq 'map(select(.name == "{{.ContainerName}}")) | .[] | 
 incus launch {{.BaseImage}} {{.ContainerName}} --config=user.user-data="$(cat {{.ContainerName}}.yml)"
 incus exec {{.ContainerName}} -- cloud-init status --wait
 incus exec {{.ContainerName}} -- shutdown now
+incus config set {{.ContainerName}} boot.autostart false
 
 # create {{.ContainerName}} image
 cmd="incus publish {{.ContainerName}} --alias {{.OutputImageAlias}} --reuse"
