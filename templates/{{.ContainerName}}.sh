@@ -52,7 +52,7 @@ EOF
 incus ls --format=json | jq 'map(select(.name == "{{.ContainerName}}")) | .[] | .name' | xargs --no-run-if-empty -I {} incus delete --force {}
 incus launch {{.BaseImage}} {{.ContainerName}} --config=user.user-data="$(cat {{.ContainerName}}.yml)"
 incus exec {{.ContainerName}} -- cloud-init status --wait
-incus exec {{.ContainerName}} -- shutdown now
+incus exec {{.ContainerName}} shutdown now
 incus config set {{.ContainerName}} boot.autostart false
 
 # create {{.ContainerName}} image
