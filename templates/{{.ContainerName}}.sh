@@ -53,7 +53,7 @@ incus ls --format=json | jq 'map(select(.name == "{{.ContainerName}}")) | .[] | 
 incus launch {{.BaseImage}} {{.ContainerName}} --config=user.user-data="$(cat {{.ContainerName}}.yml)"
 incus exec {{.ContainerName}} -- cloud-init status --wait
 incus exec {{.ContainerName}} shutdown now
-incus config set {{.ContainerName}} boot.autostart=false
+incus config set {{.ContainerName}} boot.autostart=no
 
 # create {{.ContainerName}} image
 cmd="incus publish {{.ContainerName}} --alias {{.OutputImageAlias}} --reuse"
