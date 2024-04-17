@@ -83,9 +83,6 @@ runcmd:
 - /root/install_task.sh
 - /root/install_ringgem.sh
 - /root/install_ringgem2.sh
-
-bootcmd:
-- git --work-tree=/opt/ringgem --git-dir=/opt/ringgem/.git pull origin master
 EOF
 
 incus ls --format=json | jq 'map(select(.name == "{{.ContainerName}}")) | .[] | .name' | xargs --no-run-if-empty -I {} incus delete --force {}
