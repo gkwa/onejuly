@@ -79,10 +79,27 @@ write_files:
   append: true
   permissions: "0755"
 
+- content: |
+
+    set -e
+    set -x
+    set -u
+
+    if [[ -d /opt/ringgem ]]; then
+      git --work-tree=/opt/ringgem --git-dir=/opt/ringgem/.git pull origin master
+    fi
+
+  path: /root/ringgem_update.sh
+  append: true
+  permissions: "0755"
+
 runcmd:
 - /root/install_task.sh
 - /root/install_ringgem.sh
 - /root/install_ringgem2.sh
+
+bootcmd:
+- /root/ringgem_update.sh
 EOF
 
 incus ls --format=json | jq 'map(select(.name == "{{.ContainerName}}")) | .[] | .name' | xargs --no-run-if-empty -I {} incus delete --force {}
