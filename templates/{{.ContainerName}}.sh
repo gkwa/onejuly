@@ -62,6 +62,11 @@ write_files:
 
     mkdir -p /opt/ringgem
     git --work-tree=/opt/ringgem --git-dir=/opt/ringgem/.git init --quiet
+
+    if ! git --work-tree=/opt/ringgem --git-dir=/opt/ringgem/.git remote show origin >/dev/null 2>&1; then
+      git --work-tree=/opt/ringgem --git-dir=/opt/ringgem/.git remote add origin https://github.com/taylormonacelli/ringgem.git
+    fi
+
     git --work-tree=/opt/ringgem --git-dir=/opt/ringgem/.git remote add origin https://github.com/taylormonacelli/ringgem.git
     git --work-tree=/opt/ringgem --git-dir=/opt/ringgem/.git pull origin master
     git --work-tree=/opt/ringgem --git-dir=/opt/ringgem/.git branch --set-upstream-to=origin/master master
