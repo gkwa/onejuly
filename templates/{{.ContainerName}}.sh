@@ -67,6 +67,8 @@ write_files:
     git --work-tree=/opt/ringgem --git-dir=/opt/ringgem/.git branch --set-upstream-to=origin/master master
     git --git-dir=/opt/ringgem/.git pull
 
+    ln -fs /opt/ringgem/Taskfile.yaml $HOME/Taskfile.yaml
+
     rm -rf /tmp/ringgem /tmp/ringgem-master.zip
 
   path: /root/install_ringgem2.sh
