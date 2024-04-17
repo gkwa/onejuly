@@ -90,7 +90,7 @@ bootcmd:
   set -x
   set -u
 
-  if ! command -v git &>/dev/null
+  if ! command -v git &>/dev/null; then
     echo exitting, can't find git
     exit 1
   fi
