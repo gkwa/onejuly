@@ -90,6 +90,11 @@ bootcmd:
   set -x
   set -u
 
+  if ! command -v git &>/dev/null
+    echo exitting, can't find git
+    exit 1
+  fi
+
   if [[ -d /opt/ringgem ]]; then
     git --work-tree=/opt/ringgem --git-dir=/opt/ringgem/.git pull origin master
   fi
