@@ -85,19 +85,8 @@ runcmd:
 - /root/install_ringgem2.sh
 
 bootcmd:
-- |
-  bash -c '
-  set -e
-  set -x
-  set -u
-  if ! command -v git &>/dev/null; then
-    echo exitting, cant find git
-    exit 1
-  fi
-  if [[ -d /opt/ringgem ]]; then
-    git --work-tree=/opt/ringgem --git-dir=/opt/ringgem/.git pull origin master
-  fi
-  '
+- command -v git
+- bash -c '[[ -d /opt/ringgem ]] && git --work-tree=/opt/ringgem --git-dir=/opt/ringgem/.git pull origin master'
 EOF
 
 incus ls --format=json | jq 'map(select(.name == "{{.ContainerName}}")) | .[] | .name' | xargs --no-run-if-empty -I {} incus delete --force {}
