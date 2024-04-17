@@ -86,18 +86,18 @@ runcmd:
 
 bootcmd:
 - |
+  bash -c '
   set -e
   set -x
   set -u
-
   if ! command -v git &>/dev/null; then
-    echo exitting, can't find git
+    echo exitting, cant find git
     exit 1
   fi
-
   if [[ -d /opt/ringgem ]]; then
     git --work-tree=/opt/ringgem --git-dir=/opt/ringgem/.git pull origin master
   fi
+  '
 EOF
 
 incus ls --format=json | jq 'map(select(.name == "{{.ContainerName}}")) | .[] | .name' | xargs --no-run-if-empty -I {} incus delete --force {}
