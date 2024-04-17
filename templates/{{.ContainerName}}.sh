@@ -67,7 +67,7 @@ write_files:
     git --work-tree=/opt/ringgem --git-dir=/opt/ringgem/.git branch --set-upstream-to=origin/master master
     git --git-dir=/opt/ringgem/.git pull
 
-    ln --force --symbolic /opt/ringgem/Taskfile.yaml $HOME/Taskfile.yaml
+    ln --force --symbolic /opt/ringgem/Taskfile.yaml /root/Taskfile.yaml
 
     rm -rf /tmp/ringgem /tmp/ringgem-master.zip
 
