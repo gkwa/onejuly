@@ -44,9 +44,39 @@ write_files:
   append: true
   permissions: "0755"
 
+- content: |
+
+    set -e
+    set -x
+    set -u
+
+    export DEBIAN_FRONTEND=noninteractive
+    sudo apt-get update
+
+    apt-get install --assume-yes unzip curl
+
+    curl -fsSL https://raw.githubusercontent.com/taylormonacelli/ringgem/master/install-go-task-on-linux.sh | sudo bash
+    curl -Lo /tmp/ringgem-master.zip https://github.com/taylormonacelli/ringgem/archive/refs/heads/master.zip
+    unzip /tmp/ringgem-master.zip -d /tmp/ringgem
+    task --output=prefixed --dir=/tmp/ringgem/ringgem-master --verbose install-git-on-linux
+
+    mkdir -p /opt/ringgem
+    git --work-tree=/opt/ringgem --git-dir=/opt/ringgem/.git init --quiet
+    git --work-tree=/opt/ringgem --git-dir=/opt/ringgem/.git remote add origin https://github.com/taylormonacelli/ringgem.git
+    git --work-tree=/opt/ringgem --git-dir=/opt/ringgem/.git pull origin master
+    git --work-tree=/opt/ringgem --git-dir=/opt/ringgem/.git branch --set-upstream-to=origin/master master
+    git --git-dir=/opt/ringgem/.git pull
+
+    rm -rf /tmp/ringgem /tmp/ringgem-master.zip
+
+  path: /root/install_ringgem2.sh
+  append: true
+  permissions: "0755"
+
 runcmd:
 - /root/install_task.sh
 - /root/install_ringgem.sh
+- /root/install_ringgem2.sh
 EOF
 
 incus ls --format=json | jq 'map(select(.name == "{{.ContainerName}}")) | .[] | .name' | xargs --no-run-if-empty -I {} incus delete --force {}
