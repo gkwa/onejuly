@@ -65,7 +65,7 @@ tasks:
   t2.sh:
     cmds:
     - |
-      boilerplate --template-url=https://github.com/taylormonacelli/onejuly/archive/refs/heads/master.zip//onejuly-master/templates --output-folder=. --var ContainerName=t2 --var BaseImage=t1-ringgem --var OutputImageAlias=t2-t1-ringgem
+      boilerplate --non-interactive --template-url=https://github.com/taylormonacelli/onejuly/archive/refs/heads/master.zip//onejuly-master/templates --output-folder=. --var ContainerName=t2 --var BaseImage=t1-ringgem --var OutputImageAlias=t2-t1-ringgem
     status:
     - test -s t2.sh
     deps:
@@ -74,7 +74,7 @@ tasks:
   t1.sh:
     cmds:
     - |
-      boilerplate --template-url=https://github.com/taylormonacelli/onejuly/archive/refs/heads/master.zip//onejuly-master/templates --output-folder=. --var ContainerName=t1 --var BaseImage=ringgem-ubuntu --var OutputImageAlias=t1-ringgem
+      boilerplate --non-interactive --template-url=https://github.com/taylormonacelli/onejuly/archive/refs/heads/master.zip//onejuly-master/templates --output-folder=. --var ContainerName=t1 --var BaseImage=ringgem-ubuntu --var OutputImageAlias=t1-ringgem
     status:
     - test -s t1.sh
     deps:
@@ -83,7 +83,7 @@ tasks:
   ringgem.sh:
     cmds:
     - |
-      boilerplate --template-url=https://github.com/taylormonacelli/onejuly/archive/refs/heads/master.zip//onejuly-master/templates --output-folder=. --var ContainerName=ringgem --var BaseImage=images:ubuntu/22.04/cloud --var OutputImageAlias=ringgem-ubuntu
+      boilerplate --non-interactive --template-url=https://github.com/taylormonacelli/onejuly/archive/refs/heads/master.zip//onejuly-master/templates --output-folder=. --var ContainerName=ringgem --var BaseImage=images:ubuntu/22.04/cloud --var OutputImageAlias=ringgem-ubuntu
     status:
     - test -s ringgem.sh
     deps:
